@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Planner_SLR
 {
     class Program
@@ -12,6 +13,8 @@ namespace Planner_SLR
 
         public static void Main(string[] args)
         {
+            Console.Title = "Planner-SLR";
+            
             //beginning of the main
             while (true)
                 {
