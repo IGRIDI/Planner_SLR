@@ -155,6 +155,7 @@ namespace Planner_SLR
         {
             Console.Clear();
             Console.WriteLine("Delete task.");
+            Console.WriteLine("To select the job to be deleted, enter its number (the numbering starts at 0)");
 
             if (Tasks.Count == 0)
             {
@@ -176,7 +177,7 @@ namespace Planner_SLR
         {
             Console.Clear();
             Console.WriteLine("Edit task");
-
+            Console.WriteLine("To select a variable task, enter its number (the numbering starts from 0)");
             if (Tasks.Count == 0)
             {
                 Console.WriteLine("There are no tasks so none can be edited.\r\nClick [Enter]");

@@ -1,1 +1,6 @@
 E:\Files\СЕВГУ\SHARP\Planner-SLR\Planner-SLR\bin\Debug\Planner-SLR.exe.config
+E:\Files\СЕВГУ\SHARP\Planner-SLR\Planner-SLR\bin\Debug\Planner-SLR.exe
+E:\Files\СЕВГУ\SHARP\Planner-SLR\Planner-SLR\bin\Debug\Planner-SLR.pdb
+E:\Files\СЕВГУ\SHARP\Planner-SLR\Planner-SLR\obj\Debug\Planner-SLR.csprojResolveAssemblyReference.cache
+E:\Files\СЕВГУ\SHARP\Planner-SLR\Planner-SLR\obj\Debug\Planner-SLR.exe
+E:\Files\СЕВГУ\SHARP\Planner-SLR\Planner-SLR\obj\Debug\Planner-SLR.pdb
