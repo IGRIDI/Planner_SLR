@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 
 namespace Planner_SLR
@@ -29,7 +30,15 @@ namespace Planner_SLR
             Console.Clear();
 
             //Menu
-            Console.WriteLine("Please choose an action: ");
+            Console.WriteLine("********************************************************************");
+            Console.WriteLine("WARNING! AFTER YOUR CHANGES IN YOUR LIST, YOU MUST VIEW IT (PRESS [0])");
+            Console.WriteLine("AND BE SURE OF THE CORRECTNESS OF THE DATA");
+            Console.WriteLine("IN ADDITION THE DATA AFTER RECORDING IN THE FILE WILL BE LOST!");
+            Console.WriteLine("********************************************************************");
+            Console.WriteLine();
+
+            Console.WriteLine("Welcome to your planner, choose an action: ");
+            
             Console.WriteLine("------------------------ ");
             Console.WriteLine("[0] Show to-do list");
             Console.WriteLine("[1] Add a new task");
@@ -134,10 +143,14 @@ namespace Planner_SLR
 
         private static void PrintAllTasks()
         {
+            StreamWriter sw = new StreamWriter("PLanner.txt", false);
             foreach (var task in Tasks)
             {
                 Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+                sw.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+
             }
+            sw.Close();
         }
 
         private static void CreateTask()
