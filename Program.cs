@@ -240,38 +240,43 @@ namespace Planner_SLR
 
         private static void SeeTheFile()
         {
-            string line;
-            string[] lines = File.ReadAllLines("Planner.txt");
-
-            //Сhecking for an empty file
-            if (lines.Length == 0)
+            if (File.Exists("Planner.txt"))
             {
-                Console.WriteLine("File is empty");
+                string line;
+                string[] lines = File.ReadAllLines("Planner.txt");
+
+                //Сhecking for an empty file
+                if (lines.Length == 0)
+                {
+                    Console.WriteLine("File is empty");
+                }
+                else
+                {
+                    StreamReader sr = new StreamReader("Planner.txt");
+                    //Read the first line of text
+                    line = sr.ReadLine();
+
+                    //Continue to read until reach end of file
+                    while (line != null)
+                    {
+                        Console.WriteLine(line);
+                        
+                        //Read the next line
+                        line = sr.ReadLine();
+                    }
+
+                    //Close the file
+                    sr.Close();
+                    Console.WriteLine("All data was successfully downloaded for viewing\r\nClick [Enter]");
+                }
+                Console.ReadLine();
             }
             else
             {
-                StreamReader sr = new StreamReader("Planner.txt");
-                //Read the first line of text
-                line = sr.ReadLine();
-
-                //Continue to read until reach end of file
-                while (line != null)
-                {
-                    Console.WriteLine(line);
-                    // var description = line;
-                    //  var todo = new Planner(description);
-                    // Tasks.Add(todo);
-
-                    //Read the next line
-                    line = sr.ReadLine();
-                }
-
-                //Close the file
-                sr.Close();
-                Console.WriteLine("All data was successfully downloaded for viewing\r\nClick [Enter]");
+                Console.WriteLine("Error. File is missing\r\nClick [Enter]");
+                Console.ReadLine();
             }
-            Console.ReadLine();
-        }
+       }
 
             private static void SaveInTheFile()
         {
