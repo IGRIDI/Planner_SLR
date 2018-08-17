@@ -45,6 +45,7 @@ namespace Planner_SLR
             Console.WriteLine("[2] Delete the task");
             Console.WriteLine("[3] Edit the task");
             Console.WriteLine("[4] Close application");
+            Console.WriteLine("[5] Add from file");
             Console.WriteLine("------------------------ ");
         }
 
@@ -59,7 +60,7 @@ namespace Planner_SLR
                 var input = Convert.ToInt32(Console.ReadLine());
 
                 //Validation of entered values
-                if (!(input >= 0 && input <= 4))
+                if (!(input >= 0 && input <= 5))
                 {
                    throw new Exception("Validation error");
                 }
@@ -68,7 +69,7 @@ namespace Planner_SLR
             }
             catch (Exception)
             {
-                Console.WriteLine("\r\nPlease enter a valid number. (Between 0 and 4)");
+                Console.WriteLine("\r\nPlease enter a valid number. (Between 0 and 5)");
                 return InputSelect();
             }
         }
@@ -96,6 +97,9 @@ namespace Planner_SLR
                         break;
                     case 4:
                         EndApplication();
+                        break;
+                    case 5:
+                       SeeTheFile();
                         break;
 
                     default:
@@ -146,9 +150,12 @@ namespace Planner_SLR
             StreamWriter sw = new StreamWriter("PLanner.txt", false);
             foreach (var task in Tasks)
             {
-                Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
-                sw.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
-
+                //Console.WriteLine("Create: " + task.Description);
+            Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+            string lineffile = ("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+            sw.WriteLine(lineffile);
+                //sw.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+               // sw.WriteLine(task.Description);
             }
             sw.Close();
         }
@@ -218,5 +225,45 @@ namespace Planner_SLR
         {
             Environment.Exit(0);
         }
+
+        private static void SeeTheFile()
+        {
+            String line;
+             try
+             {
+                 //Pass the file path and file name to the StreamReader constructor
+                 StreamReader sr = new StreamReader("Planner.txt");
+
+                 //Read the first line of text
+                 line = sr.ReadLine();
+
+                 //Continue to read until you reach end of file
+                 while (line != null)
+                 {
+                     //write the lie to console window
+                     Console.WriteLine(line);
+                    var description = line;
+                     var todo = new Planner(description);
+                    Tasks.Add(todo);
+                     Console.WriteLine("The task was created.\r\nClick [Enter]");
+                 //  Console.ReadLine();
+
+                     //Read the next line
+                     line = sr.ReadLine();
+                 }
+                 
+                 //close the file
+                 sr.Close();
+                 Console.ReadLine();
+             }
+             catch (Exception e)
+             {
+                 Console.WriteLine("Exception: " + e.Message);
+             }
+             finally
+             {
+                 Console.WriteLine("Executing finally block.");
+             } 
+        } 
     }
 }
