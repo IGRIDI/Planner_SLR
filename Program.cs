@@ -31,22 +31,26 @@ namespace Planner_SLR
 
             //Menu
             Console.WriteLine("**********************************************************************");
-            Console.WriteLine("WARNING! AFTER YOUR CHANGES IN YOUR LIST, YOU MUST VIEW IT (PRESS [0])");
-            Console.WriteLine("AND BE SURE OF THE CORRECTNESS OF THE DATA");
-            Console.WriteLine("IN ADDITION THE DATA AFTER RECORDING IN THE FILE WILL BE LOST!");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("             WARNING! AFTER YOUR CHANGES IN YOUR LIST");
+            Console.WriteLine("         YOU MUST VIEW IT (PRESS [0]) AND SAVE IT (PRESS [5])");
+            Console.WriteLine("             AND BE SURE OF THE CORRECTNESS OF THE DATA");
+            Console.WriteLine("     IN ADDITION THE DATA AFTER RECORDING IN THE FILE WILL BE LOST!");
+            Console.ResetColor();
             Console.WriteLine("**********************************************************************");
             Console.WriteLine();
 
-            Console.WriteLine("Welcome to your daily planner, choose an action: ");
+            Console.WriteLine(" Welcome to your daily planner, choose an action: ");
             
-            Console.WriteLine("------------------------ ");
-            Console.WriteLine("[0] Show to-do list");
-            Console.WriteLine("[1] Add a new task");
-            Console.WriteLine("[2] Delete the task");
-            Console.WriteLine("[3] Edit the task");
-            Console.WriteLine("[4] Viewing the contents of a file");
-            Console.WriteLine("[5] Close application");
-            Console.WriteLine("------------------------ ");
+            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine(" [0] Show to-do list");
+            Console.WriteLine(" [1] Add a new task");
+            Console.WriteLine(" [2] Delete the task");
+            Console.WriteLine(" [3] Edit the task");
+            Console.WriteLine(" [4] Viewing the contents of a file");
+            Console.WriteLine(" [5] Save data to the file");
+            Console.WriteLine(" [6] Close application");
+            Console.WriteLine("-------------------------------------------------");
         }
 
        //Method for entering values
@@ -60,16 +64,18 @@ namespace Planner_SLR
                 var input = Convert.ToInt32(Console.ReadLine());
 
                 //Validation of entered values
-                if (!(input >= 0 && input <= 5))
+                if (!(input >= 0 && input <= 6))
                 {
-                   throw new Exception("Validation error");
+                    throw new Exception("Validation error");
                 }
 
                 return input;
             }
             catch (Exception)
             {
-                Console.WriteLine("\r\nPlease enter a valid number. (Between 0 and 5)");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\r\nPlease enter a valid number. (Between 0 and 6)");
+                Console.ResetColor();
                 return InputSelect();
             }
         }
@@ -99,12 +105,17 @@ namespace Planner_SLR
                         SeeTheFile();
                         break;
                     case 5:
+                        SaveInTheFile();
+                        break;
+                    case 6:
                         EndApplication();
                         break;
 
                     default:
                         //Verification will not be performed
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Unknown number");
+                        Console.ResetColor();
                         continue;
                 }
                 break;
@@ -121,12 +132,14 @@ namespace Planner_SLR
 
                 if (!(nummer >= 0 && nummer < Tasks.Count))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     throw new Exception("Validation error");
                 }
                 return nummer;
             }
             catch (Exception)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("An error has occurred. Please, try again.\r\n");
                 return SelectTask();
             }
@@ -140,24 +153,18 @@ namespace Planner_SLR
             PrintAllTasks();
 
             Console.WriteLine("\r\nBack with [Enter]");
-
             //Press [Enter] to return the menu.
             Console.ReadLine();
         }
 
         private static void PrintAllTasks()
         {
-            StreamWriter sw = new StreamWriter("PLanner.txt", false);
             foreach (var task in Tasks)
             {
-                //Console.WriteLine("Create: " + task.Description);
-            Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
-            string lineffile = (task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
-            sw.WriteLine(lineffile);
-                //sw.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
-               // sw.WriteLine(task.Description);
+                Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
             }
-            sw.Close();
+
+            
         }
 
         private static void CreateTask()
@@ -249,16 +256,30 @@ namespace Planner_SLR
                     // var description = line;
                     //  var todo = new Planner(description);
                     // Tasks.Add(todo);
-                   
+
                     //Read the next line
                     line = sr.ReadLine();
                 }
 
                 //Close the file
                 sr.Close();
-                Console.WriteLine("All data was successfully downloaded for viewing\r\nClick [Enter]") ;
-           }
+                Console.WriteLine("All data was successfully downloaded for viewing\r\nClick [Enter]");
+            }
             Console.ReadLine();
-        } 
+        }
+
+            private static void SaveInTheFile()
+        {
+           StreamWriter sw = new StreamWriter("PLanner.txt", false);
+           foreach (var task in Tasks)
+            {
+
+                string lineffile = (task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+                sw.WriteLine(lineffile);
+            }                            
+            sw.Close();
+            Console.WriteLine("Data successfully recorded\r\nClick [Enter]");
+            Console.ReadLine();
+        }
     }
 }
