@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 
 namespace Planner_SLR
@@ -29,13 +30,22 @@ namespace Planner_SLR
             Console.Clear();
 
             //Menu
-            Console.WriteLine("Please choose an action: ");
+            Console.WriteLine("**********************************************************************");
+            Console.WriteLine("WARNING! AFTER YOUR CHANGES IN YOUR LIST, YOU MUST VIEW IT (PRESS [0])");
+            Console.WriteLine("AND BE SURE OF THE CORRECTNESS OF THE DATA");
+            Console.WriteLine("IN ADDITION THE DATA AFTER RECORDING IN THE FILE WILL BE LOST!");
+            Console.WriteLine("**********************************************************************");
+            Console.WriteLine();
+
+            Console.WriteLine("Welcome to your daily planner, choose an action: ");
+            
             Console.WriteLine("------------------------ ");
             Console.WriteLine("[0] Show to-do list");
             Console.WriteLine("[1] Add a new task");
             Console.WriteLine("[2] Delete the task");
             Console.WriteLine("[3] Edit the task");
-            Console.WriteLine("[4] Close application");
+            Console.WriteLine("[4] Viewing the contents of a file");
+            Console.WriteLine("[5] Close application");
             Console.WriteLine("------------------------ ");
         }
 
@@ -50,7 +60,7 @@ namespace Planner_SLR
                 var input = Convert.ToInt32(Console.ReadLine());
 
                 //Validation of entered values
-                if (!(input >= 0 && input <= 4))
+                if (!(input >= 0 && input <= 5))
                 {
                    throw new Exception("Validation error");
                 }
@@ -59,7 +69,7 @@ namespace Planner_SLR
             }
             catch (Exception)
             {
-                Console.WriteLine("\r\nPlease enter a valid number. (Between 0 and 4)");
+                Console.WriteLine("\r\nPlease enter a valid number. (Between 0 and 5)");
                 return InputSelect();
             }
         }
@@ -86,6 +96,9 @@ namespace Planner_SLR
                         EditTask();
                         break;
                     case 4:
+                        SeeTheFile();
+                        break;
+                    case 5:
                         EndApplication();
                         break;
 
@@ -134,10 +147,17 @@ namespace Planner_SLR
 
         private static void PrintAllTasks()
         {
+            StreamWriter sw = new StreamWriter("PLanner.txt", false);
             foreach (var task in Tasks)
             {
-                Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+                //Console.WriteLine("Create: " + task.Description);
+            Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+            string lineffile = (task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+            sw.WriteLine(lineffile);
+                //sw.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+               // sw.WriteLine(task.Description);
             }
+            sw.Close();
         }
 
         private static void CreateTask()
@@ -205,5 +225,40 @@ namespace Planner_SLR
         {
             Environment.Exit(0);
         }
+
+        private static void SeeTheFile()
+        {
+            string line;
+            string[] lines = File.ReadAllLines("Planner.txt");
+
+            //Сhecking for an empty file
+            if (lines.Length == 0)
+            {
+                Console.WriteLine("File is empty");
+            }
+            else
+            {
+                StreamReader sr = new StreamReader("Planner.txt");
+                //Read the first line of text
+                line = sr.ReadLine();
+
+                //Continue to read until reach end of file
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    // var description = line;
+                    //  var todo = new Planner(description);
+                    // Tasks.Add(todo);
+                   
+                    //Read the next line
+                    line = sr.ReadLine();
+                }
+
+                //Close the file
+                sr.Close();
+                Console.WriteLine("All data was successfully downloaded for viewing\r\nClick [Enter]") ;
+           }
+            Console.ReadLine();
+        } 
     }
 }
