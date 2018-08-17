@@ -30,22 +30,22 @@ namespace Planner_SLR
             Console.Clear();
 
             //Menu
-            Console.WriteLine("********************************************************************");
+            Console.WriteLine("**********************************************************************");
             Console.WriteLine("WARNING! AFTER YOUR CHANGES IN YOUR LIST, YOU MUST VIEW IT (PRESS [0])");
             Console.WriteLine("AND BE SURE OF THE CORRECTNESS OF THE DATA");
             Console.WriteLine("IN ADDITION THE DATA AFTER RECORDING IN THE FILE WILL BE LOST!");
-            Console.WriteLine("********************************************************************");
+            Console.WriteLine("**********************************************************************");
             Console.WriteLine();
 
-            Console.WriteLine("Welcome to your planner, choose an action: ");
+            Console.WriteLine("Welcome to your daily planner, choose an action: ");
             
             Console.WriteLine("------------------------ ");
             Console.WriteLine("[0] Show to-do list");
             Console.WriteLine("[1] Add a new task");
             Console.WriteLine("[2] Delete the task");
             Console.WriteLine("[3] Edit the task");
-            Console.WriteLine("[4] Close application");
-            Console.WriteLine("[5] Add from file");
+            Console.WriteLine("[4] Viewing the contents of a file");
+            Console.WriteLine("[5] Close application");
             Console.WriteLine("------------------------ ");
         }
 
@@ -96,10 +96,10 @@ namespace Planner_SLR
                         EditTask();
                         break;
                     case 4:
-                        EndApplication();
+                        SeeTheFile();
                         break;
                     case 5:
-                       SeeTheFile();
+                        EndApplication();
                         break;
 
                     default:
@@ -152,7 +152,7 @@ namespace Planner_SLR
             {
                 //Console.WriteLine("Create: " + task.Description);
             Console.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
-            string lineffile = ("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
+            string lineffile = (task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
             sw.WriteLine(lineffile);
                 //sw.WriteLine("Create: " + task.CreatedAt.ToShortDateString() + " " + task.CreatedAt.ToShortTimeString() + ": " + task.Description);
                // sw.WriteLine(task.Description);
@@ -228,42 +228,37 @@ namespace Planner_SLR
 
         private static void SeeTheFile()
         {
-            String line;
-             try
-             {
-                 //Pass the file path and file name to the StreamReader constructor
-                 StreamReader sr = new StreamReader("Planner.txt");
+            string line;
+            string[] lines = File.ReadAllLines("Planner.txt");
 
-                 //Read the first line of text
-                 line = sr.ReadLine();
+            //Сhecking for an empty file
+            if (lines.Length == 0)
+            {
+                Console.WriteLine("File is empty");
+            }
+            else
+            {
+                StreamReader sr = new StreamReader("Planner.txt");
+                //Read the first line of text
+                line = sr.ReadLine();
 
-                 //Continue to read until you reach end of file
-                 while (line != null)
-                 {
-                     //write the lie to console window
-                     Console.WriteLine(line);
-                    var description = line;
-                     var todo = new Planner(description);
-                    Tasks.Add(todo);
-                     Console.WriteLine("The task was created.\r\nClick [Enter]");
-                 //  Console.ReadLine();
+                //Continue to read until reach end of file
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    // var description = line;
+                    //  var todo = new Planner(description);
+                    // Tasks.Add(todo);
+                   
+                    //Read the next line
+                    line = sr.ReadLine();
+                }
 
-                     //Read the next line
-                     line = sr.ReadLine();
-                 }
-                 
-                 //close the file
-                 sr.Close();
-                 Console.ReadLine();
-             }
-             catch (Exception e)
-             {
-                 Console.WriteLine("Exception: " + e.Message);
-             }
-             finally
-             {
-                 Console.WriteLine("Executing finally block.");
-             } 
+                //Close the file
+                sr.Close();
+                Console.WriteLine("All data was successfully downloaded for viewing\r\nClick [Enter]") ;
+           }
+            Console.ReadLine();
         } 
     }
 }
