@@ -15,7 +15,9 @@ namespace Planner_SLR
         public static void Main(string[] args)
         {
             Console.Title = "Planner-SLR";
-            
+            Console.WindowHeight = 30;
+            Console.WindowWidth = 80;
+            Console.BufferWidth = 80;
             //beginning of the main
             while (true)
                 {
@@ -30,19 +32,19 @@ namespace Planner_SLR
             Console.Clear();
 
             //Menu
-            Console.WriteLine("**********************************************************************");
+            Console.WriteLine("********************************************************************************");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("             WARNING! AFTER YOUR CHANGES IN YOUR LIST");
-            Console.WriteLine("         YOU MUST VIEW IT (PRESS [0]) AND SAVE IT (PRESS [5])");
-            Console.WriteLine("             AND BE SURE OF THE CORRECTNESS OF THE DATA");
-            Console.WriteLine("     IN ADDITION THE DATA AFTER RECORDING IN THE FILE WILL BE LOST!");
+            Console.WriteLine("                WARNING! AFTER YOUR CHANGES IN YOUR LIST");
+            Console.WriteLine("           YOU MUST VIEW IT (PRESS [0]) AND SAVE IT (PRESS [5])");
+            Console.WriteLine("               AND BE SURE OF THE CORRECTNESS OF THE DATA");
+            Console.WriteLine("      IN ADDITION THE DATA AFTER RECORDING IN THE FILE WILL BE LOST!");
             Console.ResetColor();
-            Console.WriteLine("**********************************************************************");
             Console.WriteLine();
-
-            Console.WriteLine(" Welcome to your daily planner, choose an action: ");
+            Console.WriteLine("********************************************************************************");
+           
+            Console.WriteLine("             Welcome to your DAILY PLANNER, choose an action: ");
             
-            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine("--------------------------------------------------------------------------------");
             Console.WriteLine(" [0] Show to-do list");
             Console.WriteLine(" [1] Add a new task");
             Console.WriteLine(" [2] Delete the task");
@@ -50,13 +52,16 @@ namespace Planner_SLR
             Console.WriteLine(" [4] Viewing the contents of a file");
             Console.WriteLine(" [5] Save data to the file");
             Console.WriteLine(" [6] Close application");
-            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine();
+            Console.WriteLine("--------------------------------------------------------------------------------");
         }
 
        //Method for entering values
         private static int InputSelect()
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("> ");
+            Console.ResetColor();
             try
             {
                 //Read the entered text. The Convert.ToInt32 method produces an error if there are letters in the string
